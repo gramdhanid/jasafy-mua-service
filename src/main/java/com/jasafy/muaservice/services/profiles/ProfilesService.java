@@ -1,8 +1,11 @@
 package com.jasafy.muaservice.services.profiles;
 
+import com.jasafy.helper.dto.BaseResponseExternal;
 import com.jasafy.helper.util.exception.CustomException;
 import com.jasafy.helper.util.exception.ErrorCode;
 import com.jasafy.helper.util.messages.BaseMessages;
+import com.jasafy.muaservice.client.AuthServiceClient;
+import com.jasafy.muaservice.dto.external.ResponseUser;
 import com.jasafy.muaservice.model.Location;
 import com.jasafy.muaservice.model.Profiles;
 import com.jasafy.muaservice.repository.ProfilesRepository;
@@ -11,15 +14,18 @@ import com.jasafy.muaservice.services.profiles.wrapper.ProfilesResponse;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 @Service
 @Slf4j
 public class ProfilesService {
 
     private final ProfilesRepository profilesRepository;
+    private final AuthServiceClient authServiceClient;
 
-    public ProfilesService(ProfilesRepository profilesRepository) {
+    public ProfilesService(ProfilesRepository profilesRepository, AuthServiceClient authServiceClient) {
         this.profilesRepository = profilesRepository;
+        this.authServiceClient = authServiceClient;
     }
 
     public ProfilesResponse getProfilesResponse(Long userId) throws CustomException {
@@ -33,10 +39,16 @@ public class ProfilesService {
     @Transactional
     public ProfilesResponse createUpdateProfiles(ProfilesRequest profilesDTO) throws CustomException {
         try {
+            log.info("createUpdateProfiles called");
             Profiles profiles = new Profiles();
-            if (profilesDTO.getUserId() != null) {
+            BaseResponseExternal<ResponseUser> responseUser = authServiceClient.getMuaById(profilesDTO.getUserId());
+            if (ObjectUtils.isEmpty(responseUser.getData())) {
+                throw new CustomException(BaseMessages.USER_NOT_FOUND, ErrorCode.GENERIC_FAILURE);
+            }
+            profiles.setUserId(responseUser.getData().getUserId());
+            if (profilesDTO.getMuaId() != null) {
                 profiles = profilesRepository
-                        .findByIdAndDeletedAndActive(profilesDTO.getUserId(), false, true)
+                        .findByIdAndDeletedAndActive(profilesDTO.getMuaId(), false, true)
                         .orElseThrow(() -> new CustomException(BaseMessages.USER_NOT_FOUND, ErrorCode.GENERIC_FAILURE));
             } else {
                 profiles.setActive(false);
@@ -49,9 +61,10 @@ public class ProfilesService {
             // location akan berbeda api
             profiles.setYearsExperience(profilesDTO.getYearsExperience());
             profiles.setAverageRating(profilesDTO.getAverageRating());
-            profiles.setTotalReviews(profiles.getTotalReviews());
+            profiles.setTotalReviews(profilesDTO.getTotalReviews());
             profiles.setBio(profilesDTO.getBio());
             profilesRepository.save(profiles);
+            log.info("createUpdateProfiles returning profiles {} response", profiles.getId());
             return toResponse(profiles);
         } catch (Exception e){
             throw new CustomException(e.getMessage(), ErrorCode.GENERIC_FAILURE);

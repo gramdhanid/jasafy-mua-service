@@ -54,7 +54,7 @@ public class ScheduleService {
         if (muaId != null) {
             profilesRepository.findById(muaId)
                     .orElseThrow(() -> new CustomException(BaseMessages.USER_NOT_FOUND, ErrorCode.GENERIC_FAILURE));
-            return toListScheduleResponse(scheduleRepository.findByProfiles_IdAndAvailableAndDeleted(muaId, true, false));
+            return toListScheduleResponse(scheduleRepository.findByProfiles_IdAndActiveAndDeleted(muaId, true, false));
         } else {
             throw new CustomException(BaseMessages.USER_NOT_FOUND, ErrorCode.GENERIC_FAILURE);
         }

@@ -13,5 +13,4 @@ public class ScheduleRequest {
     private LocalTime toTimeSlot;
     private Integer slotDuration;
     private Boolean active;
-
 }

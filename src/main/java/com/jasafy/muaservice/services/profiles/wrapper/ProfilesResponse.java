@@ -6,7 +6,7 @@ public record ProfilesResponse(
         String businessName,
         String bio,
         Integer yearsExperience,
-        Integer averageRating,
+        Double averageRating,
         Integer totalReviews,
         Boolean active,
         Boolean verified) {

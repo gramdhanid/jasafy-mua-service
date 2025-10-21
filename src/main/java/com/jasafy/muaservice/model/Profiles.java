@@ -17,7 +17,7 @@ public class Profiles extends ReferenceBase {
     @JoinColumn
     private Location muaLocation;
     private Integer yearsExperience;
-    private Integer averageRating;
+    private Double averageRating;
     private Integer totalReviews;
     private Boolean active;
     private Boolean verified;
