@@ -10,7 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "auth-service", path = "/api/auth", configuration = FeignAuthInterceptor.class)
 public interface AuthServiceClient {
 
+    /**
+     * Get User by ID
+     *
+     * @param userId User ID
+     * @return Username and userId
+     */
     @GetMapping("/user")
-    BaseResponseExternal<ResponseUser> getMuaById(@RequestParam("userId") Long userId);
+    BaseResponseExternal<ResponseUser> getUserId(@RequestParam("userId") Long userId);
 
 }

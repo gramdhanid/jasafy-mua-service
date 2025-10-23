@@ -1,14 +1,17 @@
 package com.jasafy.muaservice.controller;
 
+import com.jasafy.helper.util.apiresponse.CustomPagingResponse;
 import com.jasafy.helper.util.apiresponse.CustomResponse;
 import com.jasafy.helper.util.apiresponse.CustomResponseGenerator;
+import com.jasafy.muaservice.model.Profiles;
 import com.jasafy.muaservice.services.profiles.ProfilesService;
+import com.jasafy.muaservice.services.profiles.wrapper.ProfilesPagingResponse;
 import com.jasafy.muaservice.services.profiles.wrapper.ProfilesRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/profile")
 public class ProfilesController {
 
     private final ProfilesService profilesService;
@@ -20,9 +23,9 @@ public class ProfilesController {
     }
 
     @GetMapping
-    public CustomResponse<Object> getProfiles(@RequestParam Long userId) {
+    public CustomResponse<Object> getProfiles(@RequestParam Long muaId) {
         try {
-            return customResponseGenerator.successResponse(profilesService.getProfilesResponse(userId), HttpStatus.OK.toString());
+            return customResponseGenerator.successResponse(profilesService.getProfilesResponse(muaId), HttpStatus.OK.toString());
         } catch (Exception e){
             return customResponseGenerator.errorResponse(e.getMessage());
         }
@@ -32,6 +35,21 @@ public class ProfilesController {
     public CustomResponse<Object> createUpdateProfileMua(@RequestBody ProfilesRequest profilesRequest) {
         try {
             return customResponseGenerator.successResponse(profilesService.createUpdateProfiles(profilesRequest), HttpStatus.CREATED.toString());
+        } catch (Exception e){
+            return customResponseGenerator.errorResponse(e.getMessage());
+        }
+    }
+
+    @GetMapping("paging")
+    public CustomResponse<CustomPagingResponse<ProfilesPagingResponse>> getPageable(
+            @RequestParam(defaultValue = "", required = false) String muaName,
+            @RequestParam(defaultValue = "0", required = false) Integer startPage,
+            @RequestParam(defaultValue = "10", required = false) Integer pageSize,
+            @RequestParam(defaultValue = "businessName", required = false) String sortBy,
+            @RequestParam(defaultValue = "ASC", required = false) String sortDir) {
+        try {
+            return customResponseGenerator.successResponse(customResponseGenerator
+                    .pagingResponse(profilesService.getPagingRespone(muaName, startPage, pageSize, sortBy, sortDir)), HttpStatus.OK.toString());
         } catch (Exception e){
             return customResponseGenerator.errorResponse(e.getMessage());
         }

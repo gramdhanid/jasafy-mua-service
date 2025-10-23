@@ -22,8 +22,8 @@ public class SecurityConfig extends BaseSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("check", "login").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/profile/paging").permitAll()
+                .anyRequest().permitAll()
         );
 
         return super.configureFilterChain(http);

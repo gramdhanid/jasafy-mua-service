@@ -23,6 +23,62 @@ logging:
   level:
     org.springframework.security: TRACE
     org.springframework.security.web.FilterChainProxy: DEBUG
+    com.muabooking.bookingservice.client: DEBUG
+    feign: DEBUG
 
 jwt:
   secret: 9e83f2f88dca856821e9bcf1ff6800f029450ff9d305d76558601abc7ee574a999745a551070f45cce226d215ad0e2dec66c455a4969bba76e19d6e3dbe3b40c
+
+# Feign Configuration
+feign:
+  client:
+    config:
+      default:  # Apply to all Feign clients
+        connectTimeout: 5000
+        readTimeout: 10000
+        loggerLevel: full
+
+      mua-service:  # Specific config for mua-service client
+        connectTimeout: 3000
+        readTimeout: 8000
+        loggerLevel: basic
+
+  # Circuit Breaker (Resilience4j)
+  circuitbreaker:
+    enabled: true
+    alphanumeric-ids:
+      enabled: true
+
+  # Compression
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+# Resilience4j Circuit Breaker
+resilience4j:
+  circuitbreaker:
+    instances:
+      mua-service:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s
+        failureRateThreshold: 50
+        eventConsumerBufferSize: 10
+
+  # Retry Configuration
+  retry:
+    instances:
+      mua-service:
+        maxAttempts: 3
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+
+# Logging
