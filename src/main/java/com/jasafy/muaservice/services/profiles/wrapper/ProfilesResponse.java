@@ -2,6 +2,7 @@ package com.jasafy.muaservice.services.profiles.wrapper;
 
 
 public record ProfilesResponse(
+        Long muaId,
         Long userId,
         String businessName,
         String bio,

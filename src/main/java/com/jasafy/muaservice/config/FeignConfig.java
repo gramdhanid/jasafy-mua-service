@@ -1,25 +1,13 @@
 package com.jasafy.muaservice.config;
 
-import feign.*;
-import feign.codec.ErrorDecoder;
+import feign.Logger;
+import feign.Request;
+import feign.Retryer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.concurrent.TimeUnit;
 
-@Configuration
-public class FeignAuthInterceptor implements RequestInterceptor {
-
-    @Override
-    public void apply(RequestTemplate template) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getCredentials() instanceof String token) {
-            template.header("Authorization", "Bearer " + token);
-        }
-    }
-
+public class FeignConfig {
     /**
      * Logging level for Feign
      * NONE: No logging (production)

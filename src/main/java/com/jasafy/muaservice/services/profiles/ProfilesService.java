@@ -44,6 +44,7 @@ public class ProfilesService {
         return toResponse(profiles);
     }
 
+
     @Transactional
     public ProfilesResponse createUpdateProfiles(ProfilesRequest profilesDTO) throws CustomException {
         try {
@@ -124,6 +125,7 @@ public class ProfilesService {
 
     private ProfilesResponse toResponse(Profiles profiles) {
         return new ProfilesResponse(
+                profiles.getId(),
                 profiles.getUserId(),
                 profiles.getBusinessName(),
                 profiles.getBio(),
