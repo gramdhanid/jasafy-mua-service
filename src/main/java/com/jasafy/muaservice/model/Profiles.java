@@ -9,6 +9,7 @@ import lombok.Data;
 @Table(name = "mua_sys_profile")
 public class Profiles extends ReferenceBase {
     private Long userId;
+    private String username;
     @Column(name = "business_name", length = 100)
     private String businessName;
     @Column(length = 300)
