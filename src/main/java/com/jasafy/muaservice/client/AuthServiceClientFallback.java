@@ -1,7 +1,7 @@
 package com.jasafy.muaservice.client;
 
 import com.jasafy.helper.dto.BaseResponseExternal;
-import com.jasafy.muaservice.dto.external.ResponseUser;
+import com.jasafy.muaservice.client.dto.ResponseUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
 package com.jasafy.muaservice.client;
 
 import com.jasafy.helper.dto.BaseResponseExternal;
+import com.jasafy.muaservice.client.dto.ResponseUser;
 import com.jasafy.muaservice.config.FeignConfig;
-import com.jasafy.muaservice.dto.external.ResponseUser;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
