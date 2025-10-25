@@ -1,4 +1,4 @@
-package com.jasafy.muaservice.dto.external;
+package com.jasafy.muaservice.client.dto;
 
 import lombok.Data;
 

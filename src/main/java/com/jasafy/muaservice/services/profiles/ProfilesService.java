@@ -6,7 +6,7 @@ import com.jasafy.helper.util.exception.CustomException;
 import com.jasafy.helper.util.exception.ErrorCode;
 import com.jasafy.helper.util.messages.BaseMessages;
 import com.jasafy.muaservice.client.AuthServiceClient;
-import com.jasafy.muaservice.dto.external.ResponseUser;
+import com.jasafy.muaservice.client.dto.ResponseUser;
 import com.jasafy.muaservice.model.Location;
 import com.jasafy.muaservice.model.Profiles;
 import com.jasafy.muaservice.repository.ProfilesRepository;
