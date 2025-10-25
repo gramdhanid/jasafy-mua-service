@@ -3,7 +3,6 @@ package com.jasafy.muaservice.controller;
 import com.jasafy.helper.util.apiresponse.CustomPagingResponse;
 import com.jasafy.helper.util.apiresponse.CustomResponse;
 import com.jasafy.helper.util.apiresponse.CustomResponseGenerator;
-import com.jasafy.muaservice.model.Profiles;
 import com.jasafy.muaservice.services.profiles.ProfilesService;
 import com.jasafy.muaservice.services.profiles.wrapper.ProfilesPagingResponse;
 import com.jasafy.muaservice.services.profiles.wrapper.ProfilesRequest;

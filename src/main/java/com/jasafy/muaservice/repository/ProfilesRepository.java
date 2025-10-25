@@ -20,5 +20,7 @@ public interface ProfilesRepository extends JpaRepository<Profiles, Long> {
             where upper(p.businessName) like upper(concat('%', ?1, '%')) and p.active = ?2 and p.deleted = ?3""")
     Page<Profiles> findByBusinessNameContainsIgnoreCaseAndActiveAndDeleted(String businessName, Boolean active, Boolean deleted, Pageable pageable);
 
+    @Query("select p from Profiles p where p.username = ?1 and p.deleted = ?2 and p.active = ?3")
+    Optional<Profiles> findByUsernameAndDeletedAndActive(String username, Boolean deleted, Boolean active);
 
 }

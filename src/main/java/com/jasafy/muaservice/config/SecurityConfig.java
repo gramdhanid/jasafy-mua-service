@@ -23,6 +23,7 @@ public class SecurityConfig extends BaseSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/profile/paging").permitAll()
+                .requestMatchers("/package/**").permitAll()
                 .anyRequest().permitAll()
         );
 
